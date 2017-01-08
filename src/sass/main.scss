@@ -1,4 +1,15 @@
-h1 {
-    font-size: 64px;
-    color: #333;
+// h1 {
+//     font-size: 64px;
+//     color: #333;
+// }
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    height: 100vh;
 }

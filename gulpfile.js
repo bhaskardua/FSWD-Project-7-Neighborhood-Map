@@ -16,7 +16,7 @@ gulp.task('default', ['styles', 'lint', 'copy-html', 'scripts'], function() {
     console.log('Hello, Gulp!');
 
     gulp.watch('src/sass/**/*.scss', ['styles']);
-    gulp.watch('src/js/**/*.js', ['lint', 'scripts']);
+    gulp.watch('src/js/**/*.js', ['lint', 'scripts-watch']);
     gulp.watch('./src/index.html', ['copy-html']);
     gulp.watch('dist/index.html').on('change', browserSync.reload);
 
@@ -72,4 +72,9 @@ gulp.task('scripts', function() {
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('scripts-watch', ['scripts'], function(done) {
+    browserSync.reload();
+    done();
 });
