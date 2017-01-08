@@ -1,1 +1,4 @@
 node_modules
+.tern-project
+bower_components
+.eslintrc*

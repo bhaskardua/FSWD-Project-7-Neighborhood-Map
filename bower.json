@@ -1,0 +1,20 @@
+{
+  "name": "neighborhood-map",
+  "description": "Udacity Full Stack Web Developer Nanodegree, Project 7, Neighborhood Map",
+  "main": "app.js",
+  "authors": [
+    "dua"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/bhaskardua/FSWD-Project-7-Neighborhood-Map",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout": "^3.4.1"
+  }
+}
