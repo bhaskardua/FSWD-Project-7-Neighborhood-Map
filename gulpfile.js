@@ -7,7 +7,7 @@ var concat         = require('gulp-concat');
 var uglify         = require('gulp-uglify');
 var filter         = require('gulp-filter');
 var mainBowerFiles = require('main-bower-files');
-var sourcemaps         = require('gulp-sourcemaps');
+var sourcemaps     = require('gulp-sourcemaps');
 
 gulp.task('browser-sync', function() {
 });
