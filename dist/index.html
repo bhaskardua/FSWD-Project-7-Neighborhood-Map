@@ -9,13 +9,13 @@
 
 <body>
 
-    <ul class="navigation">
-        <li class="nav-item"><a href="#">Home</a></li>
-        <li class="nav-item"><a href="#">Portfolio</a></li>
-        <li class="nav-item"><a href="#">About</a></li>
-        <li class="nav-item"><a href="#">Blog</a></li>
-        <li class="nav-item"><a href="#">Contact</a></li>
-    </ul>
+    <div class="navigation">
+        <input type="text">
+        <div class="submit"></div>
+        <ul data-bind="foreach: Listings">
+            <li class="nav-item" ><a href="#" data-bind="text: name"></a></li>
+        </ul>
+    </div>
 
     <input type="checkbox" id="nav-trigger" class="nav-trigger" />
     <label for="nav-trigger"></label>
