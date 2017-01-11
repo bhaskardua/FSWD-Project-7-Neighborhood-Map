@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
     <title></title>
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -10,10 +11,16 @@
 <body>
 
     <div class="navigation">
-        <input type="text">
-        <div class="submit"></div>
-        <ul data-bind="foreach: Listings">
-            <li class="nav-item" ><a href="#" data-bind="text: name"></a></li>
+
+        <form data-bind="submit: markersFilter">
+            <input type="text" data-bind="value: markerFilterText">
+            <button type="submit">Filter</button>
+        </form>
+
+        <ul data-bind="foreach: markersArray">
+            <!-- ko if: filtered -->
+            <li class="nav-item"><a href="#" data-bind="text: placeName, click: $parent.markerClick"></a></li>
+            <!-- /ko -->
         </ul>
     </div>
 
@@ -26,9 +33,25 @@
     </div>
 
 
-
     <script type='text/javascript' src='js/all.min.js'></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgdnGzdJxO10aq-PJXLnhP4mfPyiScz8s&v=3&libraries=places&callback=initMap"></script>
+    <script>
+        $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDgdnGzdJxO10aq-PJXLnhP4mfPyiScz8s&v=3&libraries=places&callback=initView")
+        <!-- .done(function() { alert('Google maps loaded!') }) -->
+         .fail(function() {
+             <!-- alert('Google maps failed to load'); -->
+             $('#map').html('Google maps failed to load')
+                      .css({
+                          'color': '#777',
+                          'font-size': '30px',
+                          'line-height': '100vh',
+                          'text-align': 'center',
+                          'vertical-align': 'middle',
+                          'background-color': '#aaa',
+                          'text-shadow': '-1px -1px 1px #111, 2px 2px 1px #bbb',
+                      });
+             $('label').css('display', 'none')
+        });
+    </script>
 
 </body>
 
