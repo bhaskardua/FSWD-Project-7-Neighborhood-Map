@@ -10,7 +10,7 @@ body {
     height: 100vh;
 }
 
-.navigation {
+aside {
     list-style: none;
     background: #111;
     width: 100%;
@@ -25,12 +25,12 @@ body {
     overflow-y: scroll;
 }
 
-.navigation ul {
+aside ul {
     margin-top: 10px;
     padding-left: 0;
 }
 
-.navigation input[type="text"] {
+aside input[type="text"] {
     margin-top: 10px;
     margin-left: 3px;
     margin-right: 0;
@@ -40,7 +40,7 @@ body {
     font-size: 18px;
 }
 
-.navigation button {
+aside button {
     margin-top: 10px;
     margin-left: 0;
     width: 70px;
@@ -51,9 +51,8 @@ body {
     vertical-align: bottom;
 }
 
-/* Navigation Menu - List items */
+/* Aside - List items */
 .nav-item {
-  /* non-critical appearance styles */
   width: 250px;
   border-top: 1px solid #111;
   border-bottom: 1px solid #000;

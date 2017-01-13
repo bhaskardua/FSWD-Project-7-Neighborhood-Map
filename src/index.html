@@ -10,7 +10,7 @@
 
 <body>
 
-    <div class="navigation">
+    <aside class="navigation">
 
         <form data-bind="submit: markersFilter">
             <input type="text" data-bind="value: markerFilterText">
@@ -22,36 +22,19 @@
             <li class="nav-item"><a href="#" data-bind="text: placeName, click: $parent.markerClick"></a></li>
             <!-- /ko -->
         </ul>
-    </div>
+    </aside>
 
-    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <input type="checkbox" id="nav-trigger" class="nav-trigger">
     <label for="nav-trigger"></label>
 
 
-    <div class="site-wrap">
+    <main class="site-wrap">
         <div id="map"></div>
-    </div>
+    </main>
 
 
-    <script type='text/javascript' src='js/all.min.js'></script>
-    <script>
-        $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDgdnGzdJxO10aq-PJXLnhP4mfPyiScz8s&v=3&libraries=places&callback=initView")
-        <!-- .done(function() { alert('Google maps loaded!') }) -->
-         .fail(function() {
-             <!-- alert('Google maps failed to load'); -->
-             $('#map').html('Google maps failed to load')
-                      .css({
-                          'color': '#777',
-                          'font-size': '30px',
-                          'line-height': '100vh',
-                          'text-align': 'center',
-                          'vertical-align': 'middle',
-                          'background-color': '#aaa',
-                          'text-shadow': '-1px -1px 1px #111, 2px 2px 1px #bbb',
-                      });
-             $('label').css('display', 'none')
-        });
-    </script>
+    <script src='js/all.min.js'></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgdnGzdJxO10aq-PJXLnhP4mfPyiScz8s&v=3&libraries=places&callback=initView" onerror="googleError()"></script>
 
 </body>
 

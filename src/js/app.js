@@ -1,7 +1,7 @@
 var map;
 var infowindow;
 var service;
-var FS_API_URLRoot = 'https://api.foursquare.com/v2/venues/search?';
+var FS_API_URLROOT = 'https://api.foursquare.com/v2/venues/search?';
 /* global google ko */
 
 // ViewModel
@@ -33,27 +33,27 @@ function ListingsViewModel() {
 
     service = new google.maps.places.PlacesService(map);
 
-    google.maps.event.addListener(map, 'idle', function() {
+    service.nearbySearch({
+        // bounds: mapBounds,
+        location: singapore,
+        radius: 1000,
+        type: ['restaurant']
+    }, callback);
 
-        clearOverlays();
-
-        service.nearbySearch({
-            bounds: map.getBounds(),
-            type: ['restaurant']
-        }, callback);
-
-        service.nearbySearch({
-            bounds: map.getBounds(),
-            type: ['bar']
-        }, callback);
-
-    });
+    service.nearbySearch({
+        // bounds: map.getBounds(),
+        location: singapore,
+        radius: 1000,
+        type: ['bar']
+    }, callback);
 
     function callback(results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 createMarker(results[i]);
             }
+        } else {
+            alert('Google Places data on nearby locations is currently unavailable');
         }
     }
 
@@ -69,11 +69,6 @@ function ListingsViewModel() {
 
         google.maps.event.addListener(marker, 'click', self.markerClick);
     }
-
-    // eslint-disable-next-line no-unused-vars
-    self.markerClickKO = function(data) {
-        self.markerClick.call(data);
-    };
 
     // Click event responder
     self.markerClick = function () {
@@ -96,11 +91,11 @@ function ListingsViewModel() {
         };
 
         // eslint-disable-next-line no-undef
-        var FS_API_URL = FS_API_URLRoot + $.param(params);
+        var fsApiUrl = FS_API_URLROOT + $.param(params);
 
         // AJAX call to Foursqaure API
         // eslint-disable-next-line no-undef
-        $.ajax(FS_API_URL).done(function(response) {
+        $.ajax(fsApiUrl).done(function(response) {
 
             var name           = response.response.venues[0].name;
             var address        = response.response.venues[0].location.address;
@@ -109,7 +104,7 @@ function ListingsViewModel() {
             var formattedPhone = response.response.venues[0].contact.formattedPhone;
             var url            = response.response.venues[0].url;
 
-            var content = '<strong style="font-size:14px">' + name + '</strong>' + '<br><br>' +
+            var content = '<strong style="font-size:14px">' + (name || marker.placeName) + '</strong>' + '<br><br>' +
                 '<em>' + (address ? address : '') + '</em>' + '<br>' +
                 '<em>' + (crossStreet ? crossStreet : '') + '</em>' + '<br>' +
                 '<em>' + (postalCode ? postalCode : '') + '</em>' + '<br><br>' +
@@ -120,7 +115,7 @@ function ListingsViewModel() {
             infowindow.setContent(content);
 
         }).fail(function() {
-            var content = '<strong>' + marker.name + '</strong>' + '<br><br>' +
+            var content = '<strong>' + marker.placeName + '</strong>' + '<br><br>' +
                 '<em>Foursquare data not accessible</em>';
 
             infowindow.setContent(content);
@@ -133,7 +128,8 @@ function ListingsViewModel() {
         if (self.markerFilterText()) {
             for (var i = 0; i < self.markersArray().length; i++ ) {
                 if (!~self.markersArray()[i].placeName.toLowerCase().indexOf(self.markerFilterText().toLowerCase())) {
-                    self.markersArray()[i].setMap(null);
+                    // self.markersArray()[i].setMap(null);
+                    self.markersArray()[i].setVisible(false);
                     self.markersArray()[i].filtered(false);
                 }
             }
@@ -146,21 +142,39 @@ function ListingsViewModel() {
     
     function clearFilter() {
         for (var i = 0; i < self.markersArray().length; i++ ) {
-            self.markersArray()[i].setMap(map);
+            // self.markersArray()[i].setMap(map);
+            self.markersArray()[i].setVisible(true);
             self.markersArray()[i].filtered(true);
         }
     }
 
-    function clearOverlays() {
-        for (var i = 0; i < self.markersArray().length; i++ ) {
-            self.markersArray()[i].setMap(null);
-        }
-        self.markersArray([]);
-    }
+    // function clearOverlays() {
+    //     for (var i = 0; i < self.markersArray().length; i++ ) {
+    //         self.markersArray()[i].setMap(null);
+    //     }
+    //     self.markersArray([]);
+    // }
 }
 
 // Callback function for the async Google Maps API call
-// eslint-disable-next-line
+// eslint-disable-next-line no-unused-vars
 function initView() {
     ko.applyBindings(new ListingsViewModel());
+}
+
+// eslint-disable-next-line no-unused-vars
+function googleError() {
+    // eslint-disable-next-line no-undef
+    $('#map').html('Google maps failed to load')
+        .css({
+            'color': '#777',
+            'font-size': '30px',
+            'line-height': '100vh',
+            'text-align': 'center',
+            'vertical-align': 'middle',
+            'background-color': '#aaa',
+            'text-shadow': '-1px -1px 1px #111, 2px 2px 1px #bbb',
+        });
+    // eslint-disable-next-line no-undef
+    $('label').css('display', 'none');
 }
