@@ -4,8 +4,6 @@
 
 The app shows nearby restaurants and bars, including their address, phone number and website.
 
-Scroll the map to your desired location and it will load the nearby restaurants and bars.
-
 It also allows you to further filter the nearby locations by entering a search text.
 
 The list of locations is sourced from [Google Maps](https://maps.google.com) data and information on the locations is provide by [Foursquare](http://www.foursquare.com).
